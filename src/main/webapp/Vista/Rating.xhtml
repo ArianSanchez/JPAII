@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Rating</title>
+    </h:head>
+    <h:body>
+        <!--MENU-->
+        <h:form id="menu">
+            <p:tabMenu activeIndex="#{param.i}">
+                <p:menuitem value="Persona" outcome="/Vista/Persona.xhtml"/>
+
+                <p:menuitem value="Dashboards" outcome="/Vista/Pie.xhtml"/>
+                
+                <p:menuitem value="Rating" outcome="/Vista/Rating.xhtml"/>
+                
+                <p:menuitem value="Printer" outcome="/Vista/Printer.xhtml"/>
+
+                <p:menuitem value="Volver" outcome="/index.xhtml"/>
+
+            </p:tabMenu>                           
+        </h:form>
+        <h:form>
+            <p:growl id="messages" showDetail="true" />
+
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Basic:" />
+                <p:rating value="#{ratingView.rating1}" />
+
+                <h:outputText value="Callback:" />
+                <p:rating value="#{ratingView.rating2}" stars="10" cancel="false" onRate="alert('You rated ' + value)" />
+
+                <h:outputText value="Ajax Rate:" />
+                <p:rating value="#{ratingView.rating3}">
+                    <p:ajax event="rate" listener="#{ratingView.onrate}" update="messages" />
+                    <p:ajax event="cancel" listener="#{ratingView.oncancel}" update="messages" />
+                </p:rating>
+
+                <h:outputText value="Readonly:" />
+                <p:rating value="#{ratingView.rating4}" readonly="true" />
+
+                <h:outputText value="Disabled"/>
+                <p:rating value="#{ratingView.rating4}" disabled="true" />
+            </h:panelGrid>
+
+            <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" style="margin:5px" />
+
+            <p:dialog header="Values" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+                <h:panelGrid id="display" columns="2" cellpadding="5">
+                    <h:outputText value="Rating 1:" />
+                    <h:outputText value="#{ratingView.rating1}" />
+
+                    <h:outputText value="Rating 2:" />
+                    <h:outputText value="#{ratingView.rating2}" />
+
+                    <h:outputText value="Rating 3:" />
+                    <h:outputText value="#{ratingView.rating3}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+
